@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.solace</groupId>
+  <artifactId>solace-opentelemetry-jcsmp-integration</artifactId>
+  <version>1.1.0</version>
+  <name>Solace PubSub+ OpenTelemetry Integration for Solace JCSMP API</name>
+  <description>Solace PubSub+ OpenTelemetry Integration for Solace JCSMP API</description>
+  <url>https://docs.solace.com/</url>
+  <licenses>
+    <license>
+      <name>SOLACE CORPORATION LICENSE AGREEMENT</name>
+      <url>https://solace.com/license-software</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Solace</name>
+      <email>info@solace.com</email>
+      <organization>Solace Corporation</organization>
+      <organizationUrl>http://www.solace.com</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm</connection>
+    <developerConnection>scm</developerConnection>
+    <url>https://solace.com</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>com.solacesystems</groupId>
+      <artifactId>sol-jcsmp</artifactId>
+      <version>10.21.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-api</artifactId>
+      <version>1.29.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-sdk</artifactId>
+      <version>1.29.0</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

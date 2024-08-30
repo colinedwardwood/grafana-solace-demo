@@ -1,0 +1,47 @@
+services:
+  solace:
+    image: solace/solace-pubsub-standard:latest
+    container_name: solace
+    hostname: solace
+    # networks: # removed to accomodate using the grafana local docker-compose example without modification
+    #   - demo
+    shm_size: 1g
+    ulimits:
+      core: -1
+      nofile:
+        soft: 2448
+        hard: 11132
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 1
+    ports:
+      # Port Mappings:  With the exception of SMF, ports are mapped straight
+      # through from host to container.  This may result in port collisions on
+      # commonly used ports that will cause failure of the container to start.
+      - 5671:5671  # AMQP Default VPN over TLS
+      - 5672:5672  # AMQP Default VPN
+      - 1883:1883  # MQTT Default VPN
+      - 8000:8000  # MQTT Default VPN over WebSockets
+      - 8443:8443  # MQTT Default VPN over WebSockets / TLS
+      - 8883:8883  # MQTT Default VPN over TLS
+      - 1943:1943  # SEMP over TLS
+      - 8080:8080  # SEMP / PubSub+ Manager
+      - 9000:9000  # REST Default VPN
+      - 9443:9443  # REST Default VPN over TLS
+      - 55554:55555  # SMF
+      - 55003:55003  # SMF Compressed
+      - 55443:55443  # SMF over TLS
+      - 2222:2222  # SSH connection to CLI
+      - 8008:8008  # Web transport
+      - 1443:1443  # Web transport over TLS
+    environment:
+      - username_admin_globalaccesslevel=admin
+      - username_admin_password=admin
+      - system_scaling_maxconnectioncount=1000
+      - system_scaling_maxqueuemessagecount=240
+      - system_scaling_maxkafkabridgecount=10
+      - system_scaling_maxkafkabrokerconnectioncount=300
+      - system_scaling_maxbridgecount=25
+      - system_scaling_maxsubscriptioncount=500000
+      - messagespool_maxspoolusage=1500

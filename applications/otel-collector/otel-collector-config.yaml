@@ -1,0 +1,52 @@
+# Receivers collect telemetry from one or more sources.
+receivers:
+  otlp:
+    protocols:
+      grpc:
+
+  # get traces from the Solace message broker queue
+  solace:
+    broker: [solace:5672]
+    max_unacknowledged: 500
+    auth:
+      sasl_plain:
+        username: trace
+        password: trace
+    queue: queue://#telemetry-trace
+    tls:
+      insecure: true
+      insecure_skip_verify: true
+
+# Processors take the data collected by receivers and modify or transform it before sending it to the exporters.
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 1000
+    spike_limit_mib: 500
+  batch: 
+
+# Exporters send data to one or more backends or destinations.
+exporters:
+  logging:
+    loglevel: "info"
+
+  # enable the OpenTelemetry Protocol (OTLP) exporter to send traces to Tempo gRPC endpoint 
+  otlp:
+    endpoint: tempo:4317
+    tls:
+      insecure: true
+
+  # prometheus:
+  #   endpoint: prometheus:1234
+  #   namespace: solace-distributed-tracing
+
+
+service:
+  telemetry:
+    logs:
+      level: "warn"
+  pipelines:
+    traces:
+      receivers: [solace, otlp]
+      processors: [batch, memory_limiter]
+      exporters: [logging, otlp]

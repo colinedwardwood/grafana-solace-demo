@@ -1,0 +1,16 @@
+include:
+  - solace/docker-compose.yaml
+
+  # OTEL Collector to collect and forward traces to Tempo
+  - otel-collector/docker-compose.yaml
+
+  # Note: Removing since for this demo we will need Grafana Tempo to store the trace data and the grafana tempo local docker-compose example includes prometheus already
+  # Prometheus
+  # - prometheus/docker-compose.yaml
+
+  # Note: Removing since for this demo we will need Grafana Tempo to store the trace data and the grafana tempo local docker-compose example includes grafana already
+  # Granfana to visualize traces
+  # - grafana/docker-compose.yaml
+
+  # Grafana Tempo local docker-compose example, includes Grafana (front end visualization and alerting), Grafana Tempo (tracing backend/storage) and Prometheus (metrics backend/storage)
+  - grafana/docker-compose.yaml

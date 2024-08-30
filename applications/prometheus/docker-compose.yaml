@@ -1,0 +1,35 @@
+services:
+  prometheus:
+    image: prom/prometheus:main
+    container_name: prometheus
+    hostname: prometheus
+    networks:
+      - demo-net
+    ports:
+      - 9090:9090
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    extra_hosts:
+      - host.docker.internal=host-gateway
+    depends_on:
+      - cadvisor
+    
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: node_exporter
+    hostname: node_exporter
+    networks:
+      - demo-net
+
+  cadvisor:
+      image: gcr.io/cadvisor/cadvisor:latest
+      container_name: cadvisor
+      networks:
+        - demo-net
+      ports:
+        - 8180:8080
+      volumes:
+        - /:/rootfs:ro
+        - /var/run:/var/run:ro
+        - /sys:/sys:ro
+        - /var/lib/docker/:/var/lib/docker:ro

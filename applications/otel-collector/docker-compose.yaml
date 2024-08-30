@@ -1,0 +1,19 @@
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.105.0
+    container_name: otel-collector
+    hostname: otelcollector
+    # networks: # removed to accomodate using the grafana local docker-compose example without modification
+    #   - demo-net
+    command: ["--config=/etc/otel-collector-config.yaml", "${OTELCOL_ARGS-}"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - 1888:1888   # pprof extension
+      - 4377:4317   # OTLP gRPC receiver # adjust host port to avoid conflict
+      - 8888:8888   # Prometheus metrics exposed by the collector
+      - 8889:8889   # Prometheus exporter metrics
+      - 13133:13133 # health_check extension
+      - 55679:55679 # zpages extension
+    depends_on:
+      - prometheus
